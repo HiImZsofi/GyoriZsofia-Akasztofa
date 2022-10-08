@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    val wordArray = arrayOf("dekoracio", "webhely", "ezredes", "ejjeliszekreny", "fenyoillat", "kenyerpirito",
+    "madartoll", "aranyeso", "madartej", "dobvero")
+
     fun init(){
         rlayout = findViewById(R.id.rlayout)
         topline = findViewById(R.id.topline)
@@ -34,3 +37,4 @@ class MainActivity : AppCompatActivity() {
         randomword = findViewById(R.id.randomword)
     }
 }
+
