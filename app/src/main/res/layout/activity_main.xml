@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/rlayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,6 +34,7 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
             android:textSize="30dp"
+            android:id="@+id/letter"
 
             />
 
@@ -43,7 +45,7 @@
             android:layout_height="56dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:id="@+id/plusButton"
+            android:id="@+id/plusbutton"
             android:text="+"
 
             />
@@ -58,6 +60,7 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/topline"
+        android:id="@+id/guessbutton"
         />
 
     <ImageView
@@ -77,6 +80,7 @@
         android:layout_below="@+id/image"
         android:textColor="@color/white"
         android:letterSpacing="10"
+        android:id="@+id/randomword"
         />
 
 
