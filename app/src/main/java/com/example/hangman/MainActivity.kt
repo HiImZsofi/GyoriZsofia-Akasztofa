@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var guessbutton : Button
     private lateinit var image : ImageView
     private lateinit var randomword : TextView
+    private lateinit var chosenWord : String
+    private lateinit var underlines : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,34 +22,53 @@ class MainActivity : AppCompatActivity() {
 
         init()
         displayWord()
-        var indexplus = 0
-        var indexminus = alphabet.size - 1
-        var nextLetter : String
+        var index = 0
+        var nextLetter = ""
 
         plusbutton.setOnClickListener{
-            displayWord()
-            if(indexplus < alphabet.size){
-                nextLetter = alphabet.elementAt(indexplus).toString()
+            if(index < alphabet.size){
+                nextLetter = alphabet.elementAt(index).toString()
                 letter.setText(nextLetter)
-                indexplus++
+                index++
             }
-            else if(indexplus == alphabet.size){
-                indexplus = 0
+            else if(index == alphabet.size){
+                index = 0
             }
             //TODO szín legyen fekete ha jól tippel
+            //TODO bugos
         }
 
         minusbutton.setOnClickListener{
-            if(indexminus > 0){
-                nextLetter = alphabet.elementAt(indexminus).toString()
+            if(index > 0){
+                nextLetter = alphabet.elementAt(index).toString()
                 letter.setText(nextLetter)
-                indexminus--
+                index--
             }
-            else if(indexminus == 0){
+            else if(index == 0){
                 nextLetter = alphabet.elementAt(0).toString()
                 letter.setText(nextLetter)
-                indexminus = alphabet.size - 1
+                index = alphabet.size - 1
             }
+        }
+
+        guessbutton.setOnClickListener{
+            var currentChar : String = letter.text as String;
+            var index = 0
+            for (i in chosenWord){
+                index++
+                if(i.toString() == nextLetter){
+                    //println("ok")
+                    val sb = StringBuilder(chosenWord).also { it.setCharAt(index, nextLetter[index]) }
+                    chosenWord = sb.toString()
+                }
+            }
+           // string = new StringBuilder(underlines);
+            if(chosenWord.contains(currentChar)){
+                for (i in 0..chosenWord.length) {
+
+                }
+            }
+            randomword.setText(chosenWord)
         }
 
     }
@@ -69,10 +90,11 @@ class MainActivity : AppCompatActivity() {
         randomword.setText(displayWord());
     }
 
+
     fun displayWord():String{
         val rnd = (0..wordArray.size - 1).random()
-        val chosenWord = wordArray.elementAt(rnd)
-        var underlines:String = "";
+        chosenWord = wordArray.elementAt(rnd)
+        underlines = ""
         for (i in 0..chosenWord.length) {
             underlines+="_";
         }
