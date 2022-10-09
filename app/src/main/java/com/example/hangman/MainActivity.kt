@@ -1,10 +1,8 @@
 package com.example.hangman
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private lateinit var rlayout : RelativeLayout
@@ -21,12 +19,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         init()
+        displayWord()
         var indexplus = 0
         var indexminus = alphabet.size - 1
-        var currentIndex : Int
         var nextLetter : String
 
         plusbutton.setOnClickListener{
+            displayWord()
             if(indexplus < alphabet.size){
                 nextLetter = alphabet.elementAt(indexplus).toString()
                 letter.setText(nextLetter)
@@ -67,6 +66,18 @@ class MainActivity : AppCompatActivity() {
         guessbutton = findViewById(R.id.guessbutton)
         image = findViewById(R.id.image)
         randomword = findViewById(R.id.randomword)
+        randomword.setText(displayWord());
+    }
+
+    fun displayWord():String{
+        val rnd = (0..wordArray.size - 1).random()
+        val chosenWord = wordArray.elementAt(rnd)
+        var underlines:String = "";
+        for (i in 0..chosenWord.length) {
+            underlines+="_";
+        }
+        println(chosenWord)
+        return underlines;
     }
 }
 
