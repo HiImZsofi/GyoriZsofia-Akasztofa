@@ -26,12 +26,14 @@ class MainActivity : AppCompatActivity() {
         var nextLetter = ""
 
         plusbutton.setOnClickListener{
-            if(index < alphabet.size){
+            if(index < alphabet.size-1){
                 nextLetter = alphabet.elementAt(index).toString()
                 letter.setText(nextLetter)
                 index++
             }
-            else if(index == alphabet.size){
+            else if(index == alphabet.size-1){
+                nextLetter = alphabet.last().toString()
+                letter.setText(nextLetter)
                 index = 0
             }
             //TODO szín legyen fekete ha jól tippel
@@ -54,21 +56,18 @@ class MainActivity : AppCompatActivity() {
         guessbutton.setOnClickListener{
             var currentChar : String = letter.text as String;
             var index = 0
-            for (i in chosenWord){
-                index++
-                if(i.toString() == nextLetter){
-                    //println("ok")
-                    val sb = StringBuilder(chosenWord).also { it.setCharAt(index, nextLetter[index]) }
-                    chosenWord = sb.toString()
-                }
-            }
-           // string = new StringBuilder(underlines);
-            if(chosenWord.contains(currentChar)){
-                for (i in 0..chosenWord.length) {
+            var sb: StringBuilder = StringBuilder(randomword.getText())
+            var guessedLetter: CharSequence = letter.getText()
 
+
+                for (i in 0 until chosenWord.length) {
+                    if (chosenWord.get(i) === guessedLetter[0]) {
+                        val ch: kotlin.Char = guessedLetter[0]
+                        sb.setCharAt(i, ch)
+                    }
                 }
-            }
-            randomword.setText(chosenWord)
+                randomword.setText(sb)
+
         }
 
     }
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     var alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray() //alphabet for the buttons
 
-    fun init(){
+    fun init() {
         rlayout = findViewById(R.id.rlayout)
         topline = findViewById(R.id.topline)
         minusbutton = findViewById(R.id.minusbutton)
