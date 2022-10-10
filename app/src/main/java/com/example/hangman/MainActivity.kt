@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        var errors : Int = 0
         guessbutton.setOnClickListener{
             var currentChar : String = letter.text as String;
             var index = 0
-            var errors : Int = 0
             var sb: StringBuilder = StringBuilder(randomword.getText())
             var guessedLetter: CharSequence = letter.getText()
 
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
             else{
             println("else")
-            errors++
+            errors = errors + 1
             println(errors)
             if(errors == 1){  //nem értem hogyan működik a when
                 image.setImageResource(R.drawable.akasztofa01)
