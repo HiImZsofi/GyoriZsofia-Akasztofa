@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         var errors : Int = 0
+        var correctGuesses = ""
         guessbutton.setOnClickListener{
             var currentChar : String = letter.text as String;
             var index = 0
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                         println("if")
                         val ch: kotlin.Char = guessedLetter[0]
                         sb.setCharAt(i, ch)
+                        correctGuesses += guessedLetter
                     }
                 } //for
             }
@@ -121,12 +123,24 @@ class MainActivity : AppCompatActivity() {
                 gameOverDialogBuilder.setTitle("Nem sikerült kitalálni!");
                 gameOverDialogBuilder.setMessage("Szeretnél még egyet játszani?");
                 gameOverDialogBuilder.setCancelable(false);
-                gameOverDialogBuilder.setNegativeButton(android.R.string.no) { Nem, which ->
-                    finish()
-                }
+                gameOverDialogBuilder.setNegativeButton("Nem", DialogInterface.OnClickListener {
+                        dialog, id -> finish()
+                })
+                gameOverDialogBuilder.setPositiveButton("Igen", DialogInterface.OnClickListener {
+                        dialog, id -> index = 0
+                    nextLetter = alphabet.first().toString()
+                    letter.setText(nextLetter)
+                    randomword.setText(displayWord())
+                    errors = 0
+                    image.setImageResource(R.drawable.akasztofa00)
+                })
+
                 gameOverDialogBuilder.show()
             }
         }
+            if(correctGuesses === chosenWord){
+
+            }
                 randomword.setText(sb)
         }
 
@@ -161,5 +175,6 @@ class MainActivity : AppCompatActivity() {
         println(chosenWord)
         return underlines;
     }
+
 }
 
