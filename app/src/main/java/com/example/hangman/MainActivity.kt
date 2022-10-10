@@ -1,8 +1,11 @@
 package com.example.hangman
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var rlayout : RelativeLayout
@@ -21,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         init()
-        displayWord()
+        repeat(0){
+            displayWord()
+        }
+
         var index = 0
         var nextLetter = ""
 
@@ -56,18 +62,72 @@ class MainActivity : AppCompatActivity() {
         guessbutton.setOnClickListener{
             var currentChar : String = letter.text as String;
             var index = 0
+            var errors : Int = 0
             var sb: StringBuilder = StringBuilder(randomword.getText())
             var guessedLetter: CharSequence = letter.getText()
 
-
+            if(chosenWord.contains(letter.text)){
                 for (i in 0 until chosenWord.length) {
                     if (chosenWord.get(i) === guessedLetter[0]) {
+                        println("if")
                         val ch: kotlin.Char = guessedLetter[0]
                         sb.setCharAt(i, ch)
                     }
+                } //for
+            }
+            else{
+            println("else")
+            errors++
+            println(errors)
+            if(errors == 1){  //nem értem hogyan működik a when
+                image.setImageResource(R.drawable.akasztofa01)
+            }
+            else if(errors == 2){
+                image.setImageResource(R.drawable.akasztofa02)
+            }
+            else if(errors == 3){
+                image.setImageResource(R.drawable.akasztofa03)
+            }
+            else if(errors == 4){
+                image.setImageResource(R.drawable.akasztofa04)
+            }
+            else if(errors == 5){
+                image.setImageResource(R.drawable.akasztofa05)
+            }
+            else if(errors == 6){
+                image.setImageResource(R.drawable.akasztofa06)
+            }
+            else if(errors == 7){
+                image.setImageResource(R.drawable.akasztofa07)
+            }
+            else if(errors == 8){
+                image.setImageResource(R.drawable.akasztofa08)
+            }
+            else if(errors == 9){
+                image.setImageResource(R.drawable.akasztofa09)
+            }
+            else if(errors == 10){
+                image.setImageResource(R.drawable.akasztofa10)
+            }
+            else if(errors == 11){
+                image.setImageResource(R.drawable.akasztofa11)
+            }
+            else if(errors == 12){
+                image.setImageResource(R.drawable.akasztofa12)
+            }
+            else if(errors > 12){
+                image.setImageResource(R.drawable.akasztofa12)
+                var gameOverDialogBuilder = AlertDialog.Builder(this)
+                gameOverDialogBuilder.setTitle("Nem sikerült kitalálni!");
+                gameOverDialogBuilder.setMessage("Szeretnél még egyet játszani?");
+                gameOverDialogBuilder.setCancelable(false);
+                gameOverDialogBuilder.setNegativeButton(android.R.string.no) { Nem, which ->
+                    finish()
                 }
+                gameOverDialogBuilder.show()
+            }
+        }
                 randomword.setText(sb)
-
         }
 
     }
@@ -92,6 +152,7 @@ class MainActivity : AppCompatActivity() {
 
     fun displayWord():String{
         val rnd = (0..wordArray.size - 1).random()
+        println(rnd)
         chosenWord = wordArray.elementAt(rnd)
         underlines = ""
         for (i in 0..chosenWord.length) {
