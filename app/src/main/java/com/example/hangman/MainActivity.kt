@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 index++;
             }
-            letter.setText(alphabet[index].toUpperCase().toString());
+            letter.setText(alphabet[index].toString());
             if(correctLetters.contains(randomword.getText().toString().last())){
                 letter.setTextColor(Color.BLACK);
             }else{
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 index--;
             }
-            letter.setText(alphabet[index].toUpperCase().toString());
+            letter.setText(alphabet[index].toString());
             if(correctLetters.contains(randomword.getText().toString().last())){
                 letter.setTextColor(Color.BLACK);
             }else{
@@ -75,8 +75,9 @@ class MainActivity : AppCompatActivity() {
             var index = 0
             var sb: StringBuilder = StringBuilder(randomword.getText())
             var guessedLetter: CharSequence = letter.getText()
-
-            if(chosenWord.contains(letter.text)){
+            println(chosenWord)
+            if(chosenWord.contains(letter.text)) {
+                println("belep ide")
                 correctGuesses = randomword.text.toString()
                 for (i in chosenWord.indices) {
                     if (chosenWord.get(i) === guessedLetter[0]) {
@@ -87,14 +88,12 @@ class MainActivity : AppCompatActivity() {
                     }
                     correctGuesses = randomword.text.toString()
                     println(sb.toString())
-                    if(correctLetters.contains(guessedLetter.toString().first())){
+                    if (correctLetters.contains(guessedLetter.toString().first())) {
                         letter.setTextColor(Color.BLACK)
-                    }
-                    else{
-                        letter.setTextColor(Color.RED) //TODO bug
+                    } else {
+                        letter.setTextColor(Color.RED)
                     }
                 } //for
-
             }
             else{
             println("else")
@@ -196,7 +195,7 @@ class MainActivity : AppCompatActivity() {
         image = findViewById(R.id.image)
         randomword = findViewById(R.id.randomword)
         randomword.setText(displayWord());
-        letter.setText(alphabet[0].toString().toUpperCase())
+        letter.setText(alphabet[0].toString())
     }
 
 
