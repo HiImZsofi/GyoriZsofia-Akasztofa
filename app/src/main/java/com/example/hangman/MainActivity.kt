@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     var errors : Int = 0
     var correctGuesses = ""
-    var firstguess = ""
     val correctLetters = arrayListOf<Char>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,58 +35,51 @@ class MainActivity : AppCompatActivity() {
 
         var index = 0
         var nextLetter = ""
-        var isClickedPositive : Boolean = false
-        var isClickedNegative : Boolean = false
 
         plusbutton.setOnClickListener{
             if (index == alphabet.size-1) {
-                index = 0;
+                index = 0
             } else {
-                index++;
+                index++
             }
-            letter.setText(alphabet[index].toString());
+            letter.setText(alphabet[index].toString())
             if(correctLetters.contains(randomword.getText().toString().last())){
-                letter.setTextColor(Color.BLACK);
+                letter.setTextColor(Color.BLACK)
             }else{
-                letter.setTextColor(Color.RED);
+                letter.setTextColor(Color.RED)
             }
             //TODO bug
         }
 
         minusbutton.setOnClickListener{
             if (index == 0) {
-                index = alphabet.size-1;
+                index = alphabet.size-1
             } else {
-                index--;
+                index--
             }
-            letter.setText(alphabet[index].toString());
+            letter.setText(alphabet[index].toString())
             if(correctLetters.contains(randomword.getText().toString().last())){
-                letter.setTextColor(Color.BLACK);
+                letter.setTextColor(Color.BLACK)
             }else{
-                letter.setTextColor(Color.RED);
+                letter.setTextColor(Color.RED)
             }
 
         }
 
 
         guessbutton.setOnClickListener{
-            var currentChar : String = letter.text as String;
             var index = 0
             var sb: StringBuilder = StringBuilder(randomword.getText())
             var guessedLetter: CharSequence = letter.getText()
-            println(chosenWord)
             if(chosenWord.contains(letter.text)) {
-                println("belep ide")
                 correctGuesses = randomword.text.toString()
                 for (i in chosenWord.indices) {
                     if (chosenWord.get(i) === guessedLetter[0]) {
-                        println("if")
                         val ch: kotlin.Char = guessedLetter[0]
                         sb.setCharAt(i, ch)
                         correctLetters.add(guessedLetter[0])
                     }
                     correctGuesses = randomword.text.toString()
-                    println(sb.toString())
                     if (correctLetters.contains(guessedLetter.toString().first())) {
                         letter.setTextColor(Color.BLACK)
                     } else {
@@ -96,9 +88,7 @@ class MainActivity : AppCompatActivity() {
                 } //for
             }
             else{
-            println("else")
             errors = errors + 1
-            println(errors)
             if(errors == 1){  //nem értem hogyan működik a when
                 image.setImageResource(R.drawable.akasztofa01)
             }
@@ -138,9 +128,9 @@ class MainActivity : AppCompatActivity() {
             else if(errors > 12){
                 image.setImageResource(R.drawable.akasztofa12)
                 var gameOverDialogBuilder = AlertDialog.Builder(this)
-                gameOverDialogBuilder.setTitle("Nem sikerült kitalálni!");
-                gameOverDialogBuilder.setMessage("Szeretnél még egyet játszani?");
-                gameOverDialogBuilder.setCancelable(false);
+                gameOverDialogBuilder.setTitle("Nem sikerült kitalálni!")
+                gameOverDialogBuilder.setMessage("Szeretnél még egyet játszani?")
+                gameOverDialogBuilder.setCancelable(false)
                 gameOverDialogBuilder.setNegativeButton("Nem", DialogInterface.OnClickListener {
                         dialog, id -> finish()
                 })
@@ -158,9 +148,9 @@ class MainActivity : AppCompatActivity() {
         }
             if(chosenWord == sb.toString()){
                 var winDialogBuilder = AlertDialog.Builder(this)
-                winDialogBuilder.setTitle("Nyertél!");
-                winDialogBuilder.setMessage("Szeretnél még egyet játszani?");
-                winDialogBuilder.setCancelable(false);
+                winDialogBuilder.setTitle("Nyertél!")
+                winDialogBuilder.setMessage("Szeretnél még egyet játszani?")
+                winDialogBuilder.setCancelable(false)
                 winDialogBuilder.setNegativeButton("Nem", DialogInterface.OnClickListener {
                         dialog, id -> finish()
                 })
@@ -194,21 +184,19 @@ class MainActivity : AppCompatActivity() {
         guessbutton = findViewById(R.id.guessbutton)
         image = findViewById(R.id.image)
         randomword = findViewById(R.id.randomword)
-        randomword.setText(displayWord());
+        randomword.setText(displayWord())
         letter.setText(alphabet[0].toString())
     }
 
 
     fun displayWord():String{
         val rnd = (0..wordArray.size - 1).random()
-        println(rnd)
         chosenWord = wordArray.elementAt(rnd)
         underlines = ""
         for (i in chosenWord.indices) {
-            underlines+="_";
+            underlines+="_"
         }
-        println(chosenWord)
-        return underlines;
+        return underlines
     }
 
 }
