@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 } //for
             }
             else{
-            errors = errors + 1
+                errors++
             if(errors == 1){  //nem értem hogyan működik a when
                 image.setImageResource(R.drawable.akasztofa01)
             }
