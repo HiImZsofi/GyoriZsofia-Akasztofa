@@ -2,6 +2,7 @@ package com.example.hangman
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -30,9 +31,12 @@ class MainActivity : AppCompatActivity() {
 
         var index = 0
         var nextLetter = ""
+        var isClickedPositive : Boolean = false
+        var isClickedNegative : Boolean = false
 
         plusbutton.setOnClickListener{
             if(index < alphabet.size-1){
+                isClickedPositive = true
                 nextLetter = alphabet.elementAt(index).toString()
                 letter.setText(nextLetter)
                 index++
@@ -42,16 +46,23 @@ class MainActivity : AppCompatActivity() {
                 letter.setText(nextLetter)
                 index = 0
             }
-            //TODO szín legyen fekete ha jól tippel
-            //TODO bugos
+            //TODO bug
         }
 
         minusbutton.setOnClickListener{
             if(index > 0){
+                //isClickedNegative = true
                 nextLetter = alphabet.elementAt(index).toString()
                 letter.setText(nextLetter)
                 index--
             }
+           /* else if(index > 0 || isClickedPositive == true){
+                //isClickedNegative = true
+                nextLetter = alphabet.elementAt(index - 1).toString()
+                letter.setText(nextLetter)
+                index--
+                isClickedPositive = false
+            }*/
             else if(index == 0){
                 nextLetter = alphabet.elementAt(0).toString()
                 letter.setText(nextLetter)
@@ -61,6 +72,8 @@ class MainActivity : AppCompatActivity() {
 
         var errors : Int = 0
         var correctGuesses = ""
+        var firstguess = ""
+        val correctLetters = arrayListOf<Char>()
         guessbutton.setOnClickListener{
             var currentChar : String = letter.text as String;
             var index = 0
@@ -68,14 +81,24 @@ class MainActivity : AppCompatActivity() {
             var guessedLetter: CharSequence = letter.getText()
 
             if(chosenWord.contains(letter.text)){
-                for (i in 0 until chosenWord.length) {
+                correctGuesses = randomword.text.toString()
+                for (i in chosenWord.indices) {
                     if (chosenWord.get(i) === guessedLetter[0]) {
                         println("if")
                         val ch: kotlin.Char = guessedLetter[0]
                         sb.setCharAt(i, ch)
-                        correctGuesses += guessedLetter
+                        correctLetters.add(guessedLetter[0])
+                    }
+                    correctGuesses = randomword.text.toString()
+                    println(sb.toString())
+                    if(correctLetters.contains(guessedLetter.toString().first())){
+                        letter.setTextColor(Color.BLACK)
+                    }
+                    else{
+                        letter.setTextColor(Color.RED) //TODO bug
                     }
                 } //for
+
             }
             else{
             println("else")
@@ -138,8 +161,24 @@ class MainActivity : AppCompatActivity() {
                 gameOverDialogBuilder.show()
             }
         }
-            if(correctGuesses === chosenWord){
+            if(chosenWord == sb.toString()){
+                var winDialogBuilder = AlertDialog.Builder(this)
+                winDialogBuilder.setTitle("Nyertél!");
+                winDialogBuilder.setMessage("Szeretnél még egyet játszani?");
+                winDialogBuilder.setCancelable(false);
+                winDialogBuilder.setNegativeButton("Nem", DialogInterface.OnClickListener {
+                        dialog, id -> finish()
+                })
+                winDialogBuilder.setPositiveButton("Igen", DialogInterface.OnClickListener {
+                        dialog, id -> index = 0
+                    nextLetter = alphabet.first().toString()
+                    letter.setText(nextLetter)
+                    randomword.setText(displayWord())
+                    errors = 0
+                    image.setImageResource(R.drawable.akasztofa00)
+                })
 
+                winDialogBuilder.show()
             }
                 randomword.setText(sb)
         }
@@ -169,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         println(rnd)
         chosenWord = wordArray.elementAt(rnd)
         underlines = ""
-        for (i in 0..chosenWord.length) {
+        for (i in chosenWord.indices) {
             underlines+="_";
         }
         println(chosenWord)
