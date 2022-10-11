@@ -20,6 +20,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var chosenWord : String
     private lateinit var underlines : String
 
+    var errors : Int = 0
+    var correctGuesses = ""
+    var firstguess = ""
+    val correctLetters = arrayListOf<Char>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,45 +40,36 @@ class MainActivity : AppCompatActivity() {
         var isClickedNegative : Boolean = false
 
         plusbutton.setOnClickListener{
-            if(index < alphabet.size-1){
-                isClickedPositive = true
-                nextLetter = alphabet.elementAt(index).toString()
-                letter.setText(nextLetter)
-                index++
+            if (index == alphabet.size-1) {
+                index = 0;
+            } else {
+                index++;
             }
-            else if(index == alphabet.size-1){
-                nextLetter = alphabet.last().toString()
-                letter.setText(nextLetter)
-                index = 0
+            letter.setText(alphabet[index].toUpperCase().toString());
+            if(correctLetters.contains(randomword.getText().toString().last())){
+                letter.setTextColor(Color.BLACK);
+            }else{
+                letter.setTextColor(Color.RED);
             }
             //TODO bug
         }
 
         minusbutton.setOnClickListener{
-            if(index > 0){
-                //isClickedNegative = true
-                nextLetter = alphabet.elementAt(index).toString()
-                letter.setText(nextLetter)
-                index--
+            if (index == 0) {
+                index = alphabet.size-1;
+            } else {
+                index--;
             }
-           /* else if(index > 0 || isClickedPositive == true){
-                //isClickedNegative = true
-                nextLetter = alphabet.elementAt(index - 1).toString()
-                letter.setText(nextLetter)
-                index--
-                isClickedPositive = false
-            }*/
-            else if(index == 0){
-                nextLetter = alphabet.elementAt(0).toString()
-                letter.setText(nextLetter)
-                index = alphabet.size - 1
+            letter.setText(alphabet[index].toUpperCase().toString());
+            if(correctLetters.contains(randomword.getText().toString().last())){
+                letter.setTextColor(Color.BLACK);
+            }else{
+                letter.setTextColor(Color.RED);
             }
+
         }
 
-        var errors : Int = 0
-        var correctGuesses = ""
-        var firstguess = ""
-        val correctLetters = arrayListOf<Char>()
+
         guessbutton.setOnClickListener{
             var currentChar : String = letter.text as String;
             var index = 0
@@ -200,6 +196,7 @@ class MainActivity : AppCompatActivity() {
         image = findViewById(R.id.image)
         randomword = findViewById(R.id.randomword)
         randomword.setText(displayWord());
+        letter.setText(alphabet[0].toString().toUpperCase())
     }
 
 
